@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Admin Login Page</title>
+	<meta charset="utf-8">
+	<meta name="description" content="MAPTEK Coding Assessment Homepage">
+	<!-- jQuery CDN -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+	<script src="javascripts/bootstrap.min.js" defer></script>
+
+	<!--Vue-->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+	<!--UI JS and CSS-->
+	<script src="javascripts/ui_admin_login.js" defer></script>
+	<link rel="stylesheet" type="text/css" href="stylesheets/ui_admin_login.css">
+
+	<!-- Script to check if logged in onload -->
+	<script>
+		function checkLogin() {
+      var xhttp = new XMLHttpRequest();
+
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          window.location.href = "/admin.html";
+        }
+      };
+      // Open connection
+      xhttp.open("GET", "/admin/info.json", true);
+      // Send request
+      xhttp.send();
+		}
+	</script>
+</head>
+
+<body onload="checkLogin()">
+<div id="app">
+	<!-- Navigation bar -->
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<div class="container">
+			<!-- Brand -->
+			<a class="navbar-brand" href="/">MAPTEK Assessment</a>
+		</div>
+	</nav>
+
+	<br/>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<!-- Sign-in -->
+				<!--The action input (i.e. users/admin_login_action) is the route which will be executed when the form is submitted.-->
+				<form method="post" action="/adminLogin">
+					<h2>Admin Login</h2>
+					<!-- "sr-only" added for screen reader accessibility -->
+					<label for="loginEmail" class="sr-only">Username</label>
+					<!-- autofocus to focus on this input when first accessing the page -->
+					<input name="email" type="email" id="loginEmail" class="form-control" placeholder="Username" required autofocus>
+					<label for="loginPassword" class="sr-only">Password</label>
+					<input name="password" type="password" id="loginPassword" class="form-control" placeholder="Password" required>
+					<br />
+					<p><a v-on:click="seen = !seen" href="#">Forgot Password?</a></p>
+					<!-- Submit button -->
+					<button class="btn btn-primary" type="submit">Log in</button>
+				</form>
+
+
+			</div>
+		</div>
+	</div>
+
+	<!--POP UP HTML-->
+	<!--This module is the popup form to create additional admin.-->
+	<div v-if="!seen" id="forgotPasswordForm" class="container">
+		<form @submit="forgotPassword">
+			<h1>Forgot Password?</h1>
+			<div v-if="!forgotPasswordSuccess">
+				<!-- Print error messages, if any, when creating admin -->
+				<p v-if="forgotPasswordErrors.length">
+					<b>Please correct the following error(s):</b>
+					<ul>
+						<li v-for="error in forgotPasswordErrors">{{ error }}</li>
+					</ul>
+				</p>
+
+				<!-- Form fields -->
+				<label for="firstname">First Name</label>
+				<input type="text" v-model="firstname" placeholder="Enter First Name" name="firstname" class="form-control" required>
+
+				<label for="lastname">Last Name</label>
+				<input type="text" v-model="lastname" placeholder="Enter Last Name" name="lastname" class="form-control" required>
+
+				<label for="email">Email</label>
+				<input type="text" v-model="email" placeholder="Enter Email" name="email" class="form-control" required>
+				<br>
+				<p style="color:#616161;">An automatically generated password will be sent to you via email.</p>
+
+
+			</div>
+
+			<!-- This will only show on sucessful creation of admin -->
+			<p v-if="forgotPasswordSuccess">
+				Successfully created additional admin!
+			</p>
+
+			<button v-if="!forgotPasswordSuccess" type="submit" value="submit" class="btn btn-primary">Submit</button>
+			<button class="btn btn-secondary" v-on:click="seen = !seen; forgotPasswordnSuccess=false">Close</button>
+		</form>
+	</div>
+
+	<div v-if="!seen" class="transBox">
+
+	</div>
+
+</div>
+</body>
+</html>

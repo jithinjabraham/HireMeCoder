@@ -1,0 +1,7 @@
+/* Applied to all editors using ace*/
+.ace_editor {
+	border: 1px solid lightgray;
+	margin: auto;
+	height: 200px;
+	width: 85%;
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Candidate Assessment Home</title>
+	<meta charset="utf-8">
+	<meta name="description" content="MapTek Coding Assessment Homepage">
+	<!-- jQuery CDN -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+	<!-- Bootstrap -->
+	<script src="javascripts/popper.min.js" defer></script>
+	<link rel="stylesheet" href="stylesheets/bootstrap.min.css">
+	<script src="javascripts/bootstrap.min.js" defer></script>
+
+	<!--Vue-->
+	<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+	<!-- Ace: web code editor from https://ace.c9.io/ -->
+	<script src="javascripts/ace-src-min/ace.js" defer></script>
+
+	<!-- UI Candidate JS -->
+	<script src="javascripts/ui_candidate.js" defer></script>
+	<link rel="stylesheet" href="stylesheets/ui_candidate.css">
+
+	<!-- Style sheet for code editor -->
+	<link rel="stylesheet" href="stylesheets/editor.css">
+
+	<!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div id="app">
+	<!-- top Navigation bar -->
+	<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+		<div class="container-fluid">
+	        <button type="button" id="sidebarCollapse" class="btn btn-info" @click="toggleQuestionNav">
+	            <i class="fas fa-align-left"></i>
+	            <span>Q</span>
+	        </button>
+			<!-- Brand -->
+			<a class="navbar-brand pl-3" href="/candidate.html"><i class="fas fa-home"></i> <span>MAPTEK Assessment</span></a>
+
+			<!-- Button used for toggling to drop down -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+			aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<!-- This navbar will collapse when screen is too small -->
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<!-- Left-align navbar -->
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item"><span class="navbar-text white-text">{{ displayName }}</span></li>
+					<li class="nav-item">
+						<button class="btn btn-outline-white btn-md my-2 my-sm-0 ml-3" v-on:click="logout">Log out</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="wrapper">
+		<!-- question nav bar -->
+		<nav id="sidebar" class="bg-dark navbar-dark">
+	        <div class="sidebar-header">
+	            <h3>Questions</h3>
+	            <strong>Q</strong>
+	        </div>
+
+	        <ul class="list-unstyled components" v-for="(current, index) in test" @click="currentIndex=index">
+	            <li v-bind:class="{'active':current.question_id===question.question_id}">
+	                <a>
+	                   	<i class="fas fa-question"></i> <strong>Q{{index + 1}}</strong>
+	                    <span>{{current.title}}</span>
+	                </a>
+	            </li>
+	        </ul>
+
+	        <ul class="list-unstyled">
+	            <div class="text-center">
+	            	<!-- These buttons perform the actions (save & Submit) correspondingly using the onclick functions assigned to them-->
+					<button type="button" class="save btn btn-secondary btn-md" @click="save">Save</button>
+	                <button type="button" class="submit btn btn-primary btn-lg" @click="submit">Submit</button>
+	            </div>
+	        </ul>
+	    </nav>
+	    <div class="content">
+			<!-- The candidate interface -->
+			<div class="container-fluid" v-if="question!=null">
+				<div class="row p-3">
+					<h2>{{question.title}}</h2>
+				</div>
+				<div class="row">
+					<div :class="{'p-3':true, 'col-6':(hasImg), 'col-8':(!hasImg && question.image)}">
+						<p> {{ question.body }} </p>
+					</div>
+					<div class="col-6 justify-content-right p-3" v-if="hasImg">
+						<img v-bind:src="question.image" v-bind:alt="question.title" width="100%">
+					</div>
+					<div :class="{'p-3':true, 'col-4':(!hasImg)}" v-if="!hasImg && question.image">
+						<a class="btn btn-outline-success" :href="question.image" download>Click here to download attachment!</a>
+					</div>
+				</div>
+			</div>
+			<div class="responseEditor">
+				<div class="selector" v-if="question!=null">
+					<select class="form-control" id="sel1" v-model="currentType">
+						<option v-for="(type, index) in types" v-bind:value="type.value">
+							{{ type.name }}
+						</option>
+					</select>
+				</div>
+				<div id="editor"></div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

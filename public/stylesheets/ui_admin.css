@@ -1,0 +1,75 @@
+/* The popup form - hidden by default */
+#createAdminForm {
+  padding:2%;
+  position: fixed;
+  left:50%;
+  top: 10%;
+  transform:translate(-50%, 0%);
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  background-color: white;
+}
+
+#uploadAdditionalQuestions{
+  padding:2%;
+  position: fixed;
+  left:50%;
+  top: 10%;
+  transform:translate(-50%, 0%);
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  background-color: white;
+}
+
+.blurBox {
+	filter:blur(10px);
+}
+
+.transBox {
+	padding:20%;
+	position:fixed;
+	left:0%;
+	top:0%;
+	height:100%;
+	width:100%;
+	background-color: black;
+	opacity: 0.5;
+}
+
+img {
+  width: 30%;
+  margin: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.resize{
+  resize: auto;
+  overflow: auto;
+}
+
+.containerdiv
+{
+  width: 90%;
+  height: 40%;
+  margin: 0 auto;
+
+}
+
+textarea
+{
+  width: 100%;
+}
+
+#buttonclass{
+  width: 100px;
+  margin: 5%;
+}
+
+.responseEditor{
+  position: relative;
+}
+#editor{
+  width: 100%;
+  height: 300px;
+}

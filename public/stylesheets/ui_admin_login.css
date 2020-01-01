@@ -1,0 +1,27 @@
+/* The popup form - hidden by default */
+#forgotPasswordForm {
+  padding:2%;
+  position: fixed;
+  left:50%;
+  top: 8%;
+  transform:translate(-50%, 0%);
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+  background-color: white;
+}
+
+
+.blurBox {
+	filter:blur(10px);
+}
+
+.transBox {
+	padding:20%;
+	position:fixed;
+	left:0%;
+	top:0%;
+	height:100%;
+	width:100%;
+	background-color: black;
+	opacity: 0.5;
+}
